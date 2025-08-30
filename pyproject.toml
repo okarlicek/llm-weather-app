@@ -1,5 +1,5 @@
 [project]
-name = "weather-app"
+name = "llm-weather-app"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -8,6 +8,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "mypy>=1.17.1",
     "ruff>=0.12.11",
 ]
 
@@ -22,3 +23,12 @@ lint.select = [
     "UP", # pyupgrade,
     "I",  # isort
 ]
+
+[tool.mypy]
+mypy_path = ["."]
+files = ["."]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true

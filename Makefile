@@ -2,28 +2,32 @@
 install-uv:  ## Install uv if it's not present.
 	@command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
 
-.PHONY: frozen-sync
-frozen-sync:
-	uv sync --frozen
+.PHONY: install
+install: install-uv ## Install the package, dependencies
+	uv sync --frozen --all-extras --all-packages --group lint
 
-.PHONY: init
-init: install-uv frozen-sync
+.PHONY: sync
+sync: install-uv ## Update local packages and uv.lock
+	uv sync --all-extras --all-packages --group lint
 
-.PHONY: install-dev
-install-dev:
-	uv sync --dev
-
-.PHONY: lint-code
-lint-code: install-dev
-	uv run ruff check --fix --exit-zero .
-
-.PHONY: format-code
-format-code: install-dev
-	uv run ruff format .
+.PHONY: check-code
+check-code:
+	uv run ruff check
+	uv run ruff format --check
 
 .PHONY: fix-code
-fix-code: lint-code format-code
+fix-code:
+	uv run ruff check --fix --exit-zero
+	uv run ruff format
 
 .PHONY: type-check
-type-check: install-dev
+type-check: ## Check the typing
 	uv run mypy
+
+.PHONY: lint-diff
+lint-diff:
+	uv run ruff check --diff .
+
+.PHONY: format-diff
+format-diff:
+	uv run ruff format --diff .

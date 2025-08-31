@@ -1,11 +1,13 @@
+import os
+
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
-import os
 
 load_dotenv()
 
 MODEL: str = os.environ.get("MODEL")
+
 
 class Greeting(BaseModel):
     name: str = Field(description="The name of the person to greet.")

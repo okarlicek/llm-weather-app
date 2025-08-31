@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
+
 load_dotenv()
 
 MODEL: str = os.environ.get("MODEL", "openai:gpt-4.1")

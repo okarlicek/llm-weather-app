@@ -6,7 +6,7 @@ from pydantic_ai import Agent
 
 load_dotenv()
 
-MODEL: str = os.environ.get("MODEL", "openai:gpt-4.1")
+MODEL: str | int = os.environ.get("MODEL", "openai:gpt-4.1")
 
 
 class Greeting(BaseModel):

@@ -23,3 +23,11 @@ fix-code:
 .PHONY: type-check
 type-check: ## Check the typing
 	uv run mypy
+
+.PHONY: lint-diff
+lint-diff:
+	uv run ruff check --diff .
+
+.PHONY: format-diff
+format-diff:
+	uv run ruff format --diff .

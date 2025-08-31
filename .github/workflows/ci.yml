@@ -1,0 +1,25 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout
+
+      - uses: astral-sh/setup-uv
+
+      - name: Install dependencies
+        run: uv sync --frozen --group lint
+
+      - name: Check linting with ruff
+        run: make lint-diff
+
+      - name: Check formating with ruff
+        run: make format-diff
+
+      - name: Check typing with mypy
+        run: make type-check
